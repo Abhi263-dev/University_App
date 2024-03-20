@@ -29,6 +29,12 @@ db.Sequelize = Sequelize
 
 //require models
 db.chapter=require('../models/chapter')(sequelize,DataTypes)
+db.subchapter=require('../models/subchater')(sequelize,DataTypes)
+
+
+//One to Many between users and orders
+db.chapter.hasMany(db.subchapter,{foreignKey:'chapterId'})
+db.subchapter.belongsTo(db.chapter,{foreignKey:'chapterId'})
 
 sequelize.sync()
   .then(() => {

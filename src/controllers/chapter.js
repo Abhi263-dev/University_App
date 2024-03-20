@@ -1,5 +1,6 @@
 const db = require('../db/index')
 const Chapter= db.chapter;
+const subChapter=db.subchapter;
 
 // Endpoint to add a chapter
 const createChapter = async (req, res) => {
@@ -18,7 +19,10 @@ const getChapter= async (req,res)=> {
     const chapterId = req.params.id; // Get the chapter ID from request parameters
     try {
       // Find the chapter in the database by its ID
-      const chapter = await Chapter.findByPk(chapterId);
+      const chapter = await Chapter.findByPk(chapterId, {
+        include: subChapter 
+    });
+
       
       if (!chapter) {
         return res.status(404).json({ error: "Chapter not found" });
